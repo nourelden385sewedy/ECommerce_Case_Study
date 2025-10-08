@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ECommerce_Case_Study.Repositories.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce_Case_Study.Controllers
@@ -7,5 +8,14 @@ namespace ECommerce_Case_Study.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
+        private readonly IOrderRepo _orderRepo;
+
+        public OrderController(IOrderRepo orderRepo)
+        {
+            _orderRepo = orderRepo;
+        }
+
+
+
     }
 }
