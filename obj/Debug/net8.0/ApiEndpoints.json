@@ -1,15 +1,15 @@
 [
   {
-    "ContainingType": "ECommerce_Case_Study.Controllers.ProductController",
-    "Method": "post",
-    "RelativePath": "api/Product",
+    "ContainingType": "ECommerce_Case_Study.Controllers.CustomerController",
+    "Method": "CreateCustomerAsync",
+    "RelativePath": "api/Customer/create",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "p",
-        "Type": "ECommerce_Case_Study.ProductDto",
+        "Name": "cusDto",
+        "Type": "ECommerce_Case_Study.DTOs.CreateCustomerDto",
         "IsRequired": true
       }
     ],

@@ -144,3 +144,4 @@ D:\School\Download Study Seniors First Semster\Web API\ECommerce_Case_Study\obj\
 D:\School\Download Study Seniors First Semster\Web API\ECommerce_Case_Study\obj\Debug\net8.0\ECommerce_Case_Study.pdb
 D:\School\Download Study Seniors First Semster\Web API\ECommerce_Case_Study\obj\Debug\net8.0\ECommerce_Case_Study.genruntimeconfig.cache
 D:\School\Download Study Seniors First Semster\Web API\ECommerce_Case_Study\obj\Debug\net8.0\ref\ECommerce_Case_Study.dll
+D:\School\Download Study Seniors First Semster\Web API\ECommerce_Case_Study\obj\Debug\net8.0\ECommerce_Case_Study.sourcelink.json

@@ -5,26 +5,26 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/Product": {
+    "/api/Customer/create": {
       "post": {
         "tags": [
-          "Product"
+          "Customer"
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ProductDto"
+                "$ref": "#/components/schemas/CreateCustomerDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ProductDto"
+                "$ref": "#/components/schemas/CreateCustomerDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ProductDto"
+                "$ref": "#/components/schemas/CreateCustomerDto"
               }
             }
           }
@@ -39,22 +39,56 @@
   },
   "components": {
     "schemas": {
-      "ProductDto": {
+      "CreateCustomerDto": {
+        "required": [
+          "name",
+          "password"
+        ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "contact": {
             "type": "string",
+            "format": "tel",
             "nullable": true
           },
-          "price": {
-            "maximum": 5000,
-            "minimum": 0,
-            "type": "integer",
-            "format": "int32"
+          "email": {
+            "type": "string",
+            "format": "email",
+            "nullable": true
+          },
+          "password": {
+            "minLength": 1,
+            "type": "string",
+            "format": "password"
+          },
+          "confirmPassword": {
+            "type": "string",
+            "format": "password",
+            "nullable": true
+          },
+          "profileDto": {
+            "$ref": "#/components/schemas/CustomerProfileDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomerProfileDto": {
+        "required": [
+          "address"
+        ],
+        "type": "object",
+        "properties": {
+          "address": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date"
           }
         },
         "additionalProperties": false
