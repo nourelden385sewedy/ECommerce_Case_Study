@@ -1,6 +1,22 @@
 [
   {
     "ContainingType": "ECommerce_Case_Study.Controllers.CustomerController",
+    "Method": "GetCustomerByIdAsync",
+    "RelativePath": "api/Customer/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ECommerce_Case_Study.Controllers.CustomerController",
     "Method": "CreateCustomerAsync",
     "RelativePath": "api/Customer/create",
     "HttpMethod": "POST",
@@ -10,6 +26,27 @@
       {
         "Name": "cusDto",
         "Type": "ECommerce_Case_Study.DTOs.CreateCustomerDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ECommerce_Case_Study.Controllers.CustomerController",
+    "Method": "UpdateCustomerPasswordAsync",
+    "RelativePath": "api/Customer/email/{email}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "password",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],

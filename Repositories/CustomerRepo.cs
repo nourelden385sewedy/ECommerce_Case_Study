@@ -2,6 +2,7 @@
 using ECommerce_Case_Study.Data.Models;
 using ECommerce_Case_Study.Repositories.GenericRepository;
 using ECommerce_Case_Study.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce_Case_Study.Repositories
 {
@@ -9,9 +10,15 @@ namespace ECommerce_Case_Study.Repositories
     {
         public CustomerRepo(MyAppDbContext context) : base(context) { }
 
-        public Task Custom()
+        public async Task<Customer?> GetCustomerWithProfileByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Customers.Include(c => c.CustomerProfile).FirstOrDefaultAsync(x=>x.Id==id);
         }
+
+        public async Task<Customer?> GetByEmailAsync(string email)
+        {
+            return await _context.Customers.FirstOrDefaultAsync(l => l.Email == email);
+        }
+
     }
 }

@@ -16,6 +16,28 @@ namespace ECommerce_Case_Study.Controllers
             _customerRepo = customerRepo;
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCustomerByIdAsync(int id)
+        {
+            var customer = await _customerRepo.GetCustomerWithProfileByIdAsync(id);
+            if (customer == null) 
+                return NotFound($"Error : Customer With Id '{id}' not found");
+
+            var cus = new CustomerDto()
+            {
+                Id = id,
+                Name = customer.Name,
+                Contact = customer.Contact,
+                Email = customer.Email,
+                ProfileDto = new CustomerProfileDto()
+                {
+                    Address = customer.CustomerProfile.Address,
+                    DateOfBirth = customer.CustomerProfile.DateOfBirth,
+                }
+            };
+            return Ok(cus);
+        }
+
         [HttpPost("create")]
         public async Task<IActionResult> CreateCustomerAsync(CreateCustomerDto cusDto)
         {
@@ -43,5 +65,28 @@ namespace ECommerce_Case_Study.Controllers
             await _customerRepo.SaveChangesAsync();
             return Ok(new {message = "Customer Created Successfully", cusDto});
         }
+
+
+        [HttpPut("email/{email}")]
+        public async Task<IActionResult> UpdateCustomerPasswordAsync(string email,[FromBody] string password)
+        {
+            var customer = await _customerRepo.GetByEmailAsync(email);
+
+            if (password == null)
+                return BadRequest("Password Missing");
+
+            if (customer == null)
+                return NotFound("Customer with email '{email}' not found");
+
+            customer.Password = password;
+            customer.ConfirmPassword = password;
+
+            _customerRepo.Update(customer);
+            await _customerRepo.SaveChangesAsync();
+            return Ok("Customer Password Updated Successfully");
+        }
+
+
+
     }
 }

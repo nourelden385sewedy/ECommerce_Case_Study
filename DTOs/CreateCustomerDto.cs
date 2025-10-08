@@ -21,7 +21,7 @@ namespace ECommerce_Case_Study.DTOs
         [Compare("Password", ErrorMessage = "Passwords do not match.")]
         public string ConfirmPassword { get; set; } = string.Empty;
 
-        public CustomerProfileDto ProfileDto { get; set; }
+        public CustomerProfileDto? ProfileDto { get; set; }
     }
 
     public class CustomerProfileDto

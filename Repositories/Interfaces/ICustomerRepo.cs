@@ -5,6 +5,7 @@ namespace ECommerce_Case_Study.Repositories.Interfaces
 {
     public interface ICustomerRepo : IGenericRepo<Customer> 
     {
-        Task Custom();
+        Task<Customer?> GetCustomerWithProfileByIdAsync(int id);
+        Task<Customer?> GetByEmailAsync(string email);
     }
 }
