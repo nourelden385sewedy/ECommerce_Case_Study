@@ -40,14 +40,5 @@ namespace ECommerce_Case_Study.Repositories
 
         }
 
-        public async Task<Order> GetOrderByIdAsync(int id)
-        {
-            return await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
-        }
-
-        public void RemoveOrder(Order order)
-        {
-            _context.Orders.Remove(order);
-        }
     }
 }

@@ -115,13 +115,12 @@ namespace ECommerce_Case_Study.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteOrderAsync(int id)
         {
-            var order = _orderRepo.GetOrderByIdAsync(id);
+            var order = await _orderRepo.GetByIdAsync(id);
 
             if (order == null)
                 return NotFound($"Error : Order With Id '{id}' not found!");
 
-            _orderRepo.RemoveOrder(order);
-            
+            _orderRepo.Remove(order);
             await _orderRepo.SaveChangesAsync();
             return NoContent();
         }
