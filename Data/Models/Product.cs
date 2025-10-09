@@ -24,7 +24,9 @@ namespace ECommerce_Case_Study.Data.Models
         public decimal Price { get; set; }
 
         // Relationships
-        public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+        public ICollection<Order> Orders { get; set; } = new List<Order>();
+
+        //public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
         // Category relationship (Many Products → 1 Category)
         public int CategoryId { get; set; }

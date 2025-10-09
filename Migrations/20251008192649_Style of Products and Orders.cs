@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ECommerce_Case_Study.Migrations
 {
     /// <inheritdoc />
-    public partial class _1stMig : Migration
+    public partial class StyleofProductsandOrders : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -53,7 +53,7 @@ namespace ECommerce_Case_Study.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     StockQuantity = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(8,2)", precision: 8, scale: 2, nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -95,7 +95,7 @@ namespace ECommerce_Case_Study.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderId = table.Column<int>(type: "int", nullable: false),
-                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalPrice = table.Column<decimal>(type: "decimal(8,2)", precision: 8, scale: 2, nullable: false),
                     DateOfOrder = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -111,31 +111,27 @@ namespace ECommerce_Case_Study.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderItem",
+                name: "OrderProducts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PriceAtOrder = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: true)
+                    OrdersId = table.Column<int>(type: "int", nullable: false),
+                    ProductsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderItem", x => x.Id);
+                    table.PrimaryKey("PK_OrderProducts", x => new { x.OrdersId, x.ProductsId });
                     table.ForeignKey(
-                        name: "FK_OrderItem_Orders_OrderId",
-                        column: x => x.OrderId,
+                        name: "FK_OrderProducts_Orders_OrdersId",
+                        column: x => x.OrdersId,
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderItem_Products_ProductId",
-                        column: x => x.ProductId,
+                        name: "FK_OrderProducts_Products_ProductsId",
+                        column: x => x.ProductsId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -196,19 +192,6 @@ namespace ECommerce_Case_Study.Migrations
                     { 9, 3, "Leather jacket", "Jacket", 149m, 40 }
                 });
 
-            migrationBuilder.InsertData(
-                table: "OrderItem",
-                columns: new[] { "Id", "OrderId", "PriceAtOrder", "ProductId", "Quantity" },
-                values: new object[,]
-                {
-                    { 1, 1, 899m, 1, 1 },
-                    { 2, 1, 199m, 3, 1 },
-                    { 3, 2, 59m, 5, 1 },
-                    { 4, 3, 19m, 7, 2 },
-                    { 5, 3, 49m, 8, 2 },
-                    { 6, 4, 1299m, 2, 1 }
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_CustomerProfiles_CustomerId",
                 table: "CustomerProfiles",
@@ -216,14 +199,9 @@ namespace ECommerce_Case_Study.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderItem_OrderId",
-                table: "OrderItem",
-                column: "OrderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderItem_ProductId",
-                table: "OrderItem",
-                column: "ProductId");
+                name: "IX_OrderProducts_ProductsId",
+                table: "OrderProducts",
+                column: "ProductsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerId",
@@ -249,7 +227,7 @@ namespace ECommerce_Case_Study.Migrations
                 name: "CustomerProfiles");
 
             migrationBuilder.DropTable(
-                name: "OrderItem");
+                name: "OrderProducts");
 
             migrationBuilder.DropTable(
                 name: "Orders");

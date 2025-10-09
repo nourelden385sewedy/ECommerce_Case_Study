@@ -22,6 +22,7 @@ namespace ECommerce_Case_Study.Data.Models
         public int? CustomerId { get; set; }
         public Customer? Customer { get; set; }
 
-        public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+        public ICollection<Product> Products { get; set; } = new List<Product>();
+        //public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
     }
 }

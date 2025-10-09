@@ -30,9 +30,21 @@ namespace ECommerce_Case_Study.Controllers
             if (pr == null)
                 return NotFound("There is no Products right now");
 
-            
+            var products = pr.GroupBy(p => p.Category)
+                .Select(p => new
+                {
+                    Category = p.Key.Name,
+                    products = p.Select(c => new
+                    {
+                        Product_Name = c.Name,
+                        Description = c.Description,
+                        Price = c.Price,
+                        StockQuantity = c.StockQuantity
+                    }).ToList()
+                })
+                .ToList();
 
-            return Ok();
+            return Ok(products);
         }
 
 

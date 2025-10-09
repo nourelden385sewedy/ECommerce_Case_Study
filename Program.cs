@@ -15,7 +15,7 @@ builder.Services.AddSwaggerGen();
 
 // 1. DbContext
 builder.Services.AddDbContext<MyAppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("School")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Home")));
 
 // 2. Repositories
 builder.Services.AddScoped(typeof(IGenericRepo<>), typeof(GenericRepo<>));

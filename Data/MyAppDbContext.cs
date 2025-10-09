@@ -39,7 +39,7 @@ namespace ECommerce_Case_Study.Data
                 .HasForeignKey(o => o.CustomerId)
                 .OnDelete(DeleteBehavior.SetNull);
 
-            // Order <--> OrderItem (1:M)
+            /*// Order <--> OrderItem (1:M)
             modelBuilder.Entity<Order>()
                 .HasMany(o => o.OrderItems)
                 .WithOne(oi => oi.Order)
@@ -51,7 +51,16 @@ namespace ECommerce_Case_Study.Data
                 .HasMany(p => p.OrderItems)
                 .WithOne(oi => oi.Product)
                 .HasForeignKey(oi => oi.ProductId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.SetNull);*/
+
+            // Old
+            // Product ↔ Order (M:N)
+            modelBuilder.Entity<Order>()
+                .HasMany(o => o.Products)
+                .WithMany(p => p.Orders)
+                .UsingEntity(j => j.ToTable("OrderProducts"));
+
+
 
             // Category <--> Product (1:M)
             modelBuilder.Entity<Category>()
@@ -110,7 +119,7 @@ namespace ECommerce_Case_Study.Data
             );
 
             // OrderItems (explicit junction table)
-            modelBuilder.Entity<OrderItem>().HasData(
+            /*modelBuilder.Entity<OrderItem>().HasData(
                 // Order 1: Smartphone + Headphones
                 new OrderItem { Id = 1, OrderId = 1, ProductId = 1, PriceAtOrder = 899, Quantity = 1 },
                 new OrderItem { Id = 2, OrderId = 1, ProductId = 3, PriceAtOrder = 199, Quantity = 1 },
@@ -124,7 +133,20 @@ namespace ECommerce_Case_Study.Data
 
                 // Order 4: Laptop
                 new OrderItem { Id = 6, OrderId = 4, ProductId = 2, PriceAtOrder = 1299, Quantity = 1 }
-            );
+            );*/
+
+            // Many-to-Many (Order ↔ Product)
+            /*modelBuilder.Entity("OrderProducts").HasData( 
+            // Order 1: Smartphone + Headphones
+             new { Id = 1, OrdersId = 1, ProductsId = 1 },
+            new { Id = 2, OrdersId = 1, ProductsId = 3 }, 
+            // Order 2: Clean Code
+            new { Id = 3, OrdersId = 2, ProductsId = 5 }, 
+            // Order 3: T-Shirt + Jeans
+            new { Id = 4, OrdersId = 3, ProductsId = 7 },
+            new { Id = 5, OrdersId = 3, ProductsId = 8 }, 
+            // Order 4: Laptop
+            new { Id = 6, OrdersId = 4, ProductsId = 2 } );*/
         }
     }
 }

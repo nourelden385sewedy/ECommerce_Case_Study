@@ -244,86 +244,6 @@ namespace ECommerce_Case_Study.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ECommerce_Case_Study.Data.Models.OrderItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("PriceAtOrder")
-                        .HasPrecision(8, 2)
-                        .HasColumnType("decimal(8,2)");
-
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderItem");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            OrderId = 1,
-                            PriceAtOrder = 899m,
-                            ProductId = 1,
-                            Quantity = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            OrderId = 1,
-                            PriceAtOrder = 199m,
-                            ProductId = 3,
-                            Quantity = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            OrderId = 2,
-                            PriceAtOrder = 59m,
-                            ProductId = 5,
-                            Quantity = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            OrderId = 3,
-                            PriceAtOrder = 19m,
-                            ProductId = 7,
-                            Quantity = 2
-                        },
-                        new
-                        {
-                            Id = 5,
-                            OrderId = 3,
-                            PriceAtOrder = 49m,
-                            ProductId = 8,
-                            Quantity = 2
-                        },
-                        new
-                        {
-                            Id = 6,
-                            OrderId = 4,
-                            PriceAtOrder = 1299m,
-                            ProductId = 2,
-                            Quantity = 1
-                        });
-                });
-
             modelBuilder.Entity("ECommerce_Case_Study.Data.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -444,6 +364,21 @@ namespace ECommerce_Case_Study.Migrations
                         });
                 });
 
+            modelBuilder.Entity("OrderProduct", b =>
+                {
+                    b.Property<int>("OrdersId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrdersId", "ProductsId");
+
+                    b.HasIndex("ProductsId");
+
+                    b.ToTable("OrderProducts", (string)null);
+                });
+
             modelBuilder.Entity("ECommerce_Case_Study.Data.Models.CustomerProfile", b =>
                 {
                     b.HasOne("ECommerce_Case_Study.Data.Models.Customer", "Customer")
@@ -465,24 +400,6 @@ namespace ECommerce_Case_Study.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("ECommerce_Case_Study.Data.Models.OrderItem", b =>
-                {
-                    b.HasOne("ECommerce_Case_Study.Data.Models.Order", "Order")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ECommerce_Case_Study.Data.Models.Product", "Product")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("ECommerce_Case_Study.Data.Models.Product", b =>
                 {
                     b.HasOne("ECommerce_Case_Study.Data.Models.Category", "Category")
@@ -492,6 +409,21 @@ namespace ECommerce_Case_Study.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("OrderProduct", b =>
+                {
+                    b.HasOne("ECommerce_Case_Study.Data.Models.Order", null)
+                        .WithMany()
+                        .HasForeignKey("OrdersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ECommerce_Case_Study.Data.Models.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ECommerce_Case_Study.Data.Models.Category", b =>
@@ -504,16 +436,6 @@ namespace ECommerce_Case_Study.Migrations
                     b.Navigation("CustomerProfile");
 
                     b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("ECommerce_Case_Study.Data.Models.Order", b =>
-                {
-                    b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("ECommerce_Case_Study.Data.Models.Product", b =>
-                {
-                    b.Navigation("OrderItems");
                 });
 #pragma warning restore 612, 618
         }
