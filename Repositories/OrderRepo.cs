@@ -40,5 +40,9 @@ namespace ECommerce_Case_Study.Repositories
 
         }
 
+        public async Task<Order> GetOrderByIdAsync(int id)
+        {
+            return await _context.Orders.Include(o => o.Products).FirstOrDefaultAsync(o => o.Id == id);
+        }
     }
 }

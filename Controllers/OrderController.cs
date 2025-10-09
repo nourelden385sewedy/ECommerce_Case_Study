@@ -83,7 +83,7 @@ namespace ECommerce_Case_Study.Controllers
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateOrderAsync(int id, CreateOrderDto orderDto)
         {
-            var order = await _orderRepo.GetByIdAsync(id);
+            var order = await _orderRepo.GetOrderByIdAsync(id);
 
             if (order == null)
                 return NotFound($"Error : Order With Id '{id}' not found!");
@@ -93,7 +93,9 @@ namespace ECommerce_Case_Study.Controllers
 
             var Allproducts = await _productRepo.GetAllAsync();
 
-            var existingProcuts = Allproducts.Where(p => orderDto.Products.Contains(p.Id)).ToList();
+            var existingProcuts = Allproducts
+                .Where(p => orderDto.Products.Contains(p.Id))
+                .ToList();
 
             order.Products.Clear();
 
@@ -104,7 +106,6 @@ namespace ECommerce_Case_Study.Controllers
             order.Products = existingProcuts;
 
             
-
             _orderRepo.Update(order);
             await _orderRepo.SaveChangesAsync();
 
